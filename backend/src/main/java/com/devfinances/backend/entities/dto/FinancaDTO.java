@@ -8,24 +8,21 @@ import com.devfinances.backend.entities.Financa;
 public class FinancaDTO {
 
 	private Long id;
-	private List<EntradaDTO> entradas = new ArrayList<>();
-	private List<SaidaDTO> saidas = new ArrayList<>();
+	private List<TransacaoDTO> transacoes = new ArrayList<>();
 	private double total;
 	
 	public FinancaDTO() {
 		
 	}
 	
-	public FinancaDTO(Long id, List<EntradaDTO> entradas, List<SaidaDTO> saidas) {
+	public FinancaDTO(Long id, List<TransacaoDTO> transacoes) {
 		this.id = id;
-		this.entradas = entradas;
-		this.saidas = saidas;
+		this.transacoes = transacoes;
 	}
 	
 	public FinancaDTO(Financa entity) {
 		id = entity.getId();
-		entity.getEntradas().forEach(entrada -> this.entradas.add(new EntradaDTO(entrada)));
-		entity.getSaidas().forEach(saida -> this.saidas.add(new SaidaDTO(saida)));
+		entity.getTransacoes().forEach(transacao -> this.transacoes.add(new TransacaoDTO(transacao)));
 		total = entity.getTotal();
 	}
 
@@ -37,20 +34,8 @@ public class FinancaDTO {
 		this.id = id;
 	}
 
-	public List<EntradaDTO> getEntradas() {
-		return entradas;
-	}
-
-	public void setEntradas(List<EntradaDTO> entradas) {
-		this.entradas = entradas;
-	}
-
-	public List<SaidaDTO> getSaidas() {
-		return saidas;
-	}
-
-	public void setSaidas(List<SaidaDTO> saidas) {
-		this.saidas = saidas;
+	public List<TransacaoDTO> getTransacoes() {
+		return transacoes;
 	}
 
 	public double getTotal() {

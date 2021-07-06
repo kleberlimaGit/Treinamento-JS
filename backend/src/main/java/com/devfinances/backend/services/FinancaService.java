@@ -9,15 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.devfinances.backend.entities.Entrada;
 import com.devfinances.backend.entities.Financa;
-import com.devfinances.backend.entities.Saida;
-import com.devfinances.backend.entities.dto.EntradaDTO;
+import com.devfinances.backend.entities.Transacoes;
 import com.devfinances.backend.entities.dto.FinancaDTO;
-import com.devfinances.backend.entities.dto.SaidaDTO;
-import com.devfinances.backend.repositories.EntradaRepository;
+import com.devfinances.backend.entities.dto.TransacaoDTO;
 import com.devfinances.backend.repositories.FinancaRepository;
-import com.devfinances.backend.repositories.SaidaRepository;
+import com.devfinances.backend.repositories.TransacaoRepository;
 import com.devfinances.backend.services.exception.ResourceNotFoundException;
 
 @Service
@@ -28,16 +25,13 @@ public class FinancaService {
 	private FinancaRepository repository;
 	
 	@Autowired
-	private EntradaRepository entradaRepository;
-	
-	@Autowired
-	private SaidaRepository saidaRepository;
+	private TransacaoRepository transacaoRepository;
 	
 	public FinancaDTO organizarSalario(Long id, FinancaDTO financaDto) {
 		try {
 			Financa financa = repository.getOne(id);			
-			copiarSaldos(financa, financaDto);
-			financa.setTotal(calcularTotal(financa.getEntradas(), financa.getSaidas()));
+			copiarTransacao(financa, financaDto);
+			financa.setTotal(calcularTotal(financa.getTransacoes()));
 			financa = repository.save(financa);
 			
 			return new FinancaDTO(financa);
@@ -47,10 +41,11 @@ public class FinancaService {
 
 	}
 	
-	@Transactional(readOnly = true)
-	public FinancaDTO buscarFinanca(Long id) {
+	public FinancaDTO extratoFinanca(Long id) {
 		Optional<Financa> obj = repository.findById(id);
 		Financa financa = obj.orElseThrow(() -> new ResourceNotFoundException("NAO ENCONTRADO"));
+		financa.setTotal(calcularTotal(financa.getTransacoes()));
+		repository.save(financa);
 		return new FinancaDTO(financa);
 	}
 	
@@ -59,24 +54,18 @@ public class FinancaService {
 
 
 
-	public double calcularTotal(List<Entrada> entradas, List<Saida> saidas) {
-		
-		double somarEntradas = entradas.stream().mapToDouble(valor -> valor.getValorEntrada()).sum();
-		double somarSaidas = saidas.stream().mapToDouble(valor -> valor.getValorSaida()).sum();
-		double total = somarEntradas - somarSaidas;
+	public double calcularTotal(List<Transacoes> transacoes) {
+	
+		double total = transacoes.stream().mapToDouble(x -> x.getValorTransacao()).sum();
 		return total;
 	}
 	
-	public void copiarSaldos(Financa financa, FinancaDTO financaDto) {
-		for(EntradaDTO entDto: financaDto.getEntradas()){
-			Entrada entrada = entradaRepository.getOne(entDto.getId());
-			financa.getEntradas().add(entrada);
+	public void copiarTransacao(Financa financa, FinancaDTO financaDto) {
+		for(TransacaoDTO entDto: financaDto.getTransacoes()){
+			Transacoes entrada = transacaoRepository.getOne(entDto.getId());
+			financa.getTransacoes().add(entrada);
 			
 		}
 		
-		for(SaidaDTO saidDto: financaDto.getSaidas()){
-			Saida saida = saidaRepository.getOne(saidDto.getId());
-			financa.getSaidas().add(saida);		
-		}
 	}
 }

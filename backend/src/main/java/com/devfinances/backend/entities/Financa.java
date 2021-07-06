@@ -20,10 +20,7 @@ public class Financa implements Serializable{
 	private Long id;
 	
 	@OneToMany(mappedBy = "financa", cascade = CascadeType.ALL)
-	private List<Entrada> entradas = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "financa", cascade = CascadeType.ALL)
-	private List<Saida> saidas = new ArrayList<>();
+	private List<Transacoes> transacoes = new ArrayList<>();
 	
 	private double total;
 	
@@ -32,11 +29,11 @@ public class Financa implements Serializable{
 		
 	}
 	
-	public Financa(Long id, List<Entrada> entradas, List<Saida> saidas, double total) {
+	
+	public Financa(Long id, List<Transacoes> transacoes, double total) {
 		super();
 		this.id = id;
-		this.entradas = entradas;
-		this.saidas = saidas;
+		this.transacoes = transacoes;
 		this.total = total;
 	}
 
@@ -44,33 +41,26 @@ public class Financa implements Serializable{
 		return id;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public List<Entrada> getEntradas() {
-		return entradas;
-	}
 
-	public void setEntradas(List<Entrada> entradas) {
-		this.entradas = entradas;
-	}
-
-	public List<Saida> getSaidas() {
-		return saidas;
-	}
-
-	public void setSaidas(List<Saida> saidas) {
-		this.saidas = saidas;
-	}
-	
 	public double getTotal() {
 		return total;
 	}
 
+
 	public void setTotal(double total) {
 		this.total = total;
 	}
+
+
+	public List<Transacoes> getTransacoes() {
+		return transacoes;
+	}
+
 
 	@Override
 	public int hashCode() {

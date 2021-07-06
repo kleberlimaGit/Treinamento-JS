@@ -21,7 +21,7 @@ public class FinancaController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<FinancaDTO> bucarFinanca(@PathVariable Long id){
-		FinancaDTO dto = service.buscarFinanca(id);
+		FinancaDTO dto = service.extratoFinanca(id);
 		
 		return ResponseEntity.ok().body(dto);
 	}

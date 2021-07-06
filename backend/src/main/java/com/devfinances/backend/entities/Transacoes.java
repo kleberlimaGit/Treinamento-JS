@@ -11,27 +11,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Entrada  implements Serializable{
+public class Transacoes  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private double valorEntrada;
+	private double valorTransacao;
 	private String descricao;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "financa_id")
 	private Financa financa;
 	
-	public Entrada() {
+	public Transacoes() {
 
 	}
 
-	public Entrada(Long id, double valorEntrada, String descricao, Financa financa) {
+	public Transacoes(Long id, double valorTransacao, String descricao, Financa financa) {
 		super();
 		this.id = id;
-		this.valorEntrada = valorEntrada;
+		this.valorTransacao = valorTransacao;
 		this.descricao = descricao;
 		this.financa = financa;
 	}
@@ -44,12 +44,12 @@ public class Entrada  implements Serializable{
 		this.id = id;
 	}
 
-	public double getValorEntrada() {
-		return valorEntrada;
+	public double getValorTransacao() {
+		return valorTransacao;
 	}
 
-	public void setValorEntrada(double valorEntrada) {
-		this.valorEntrada = valorEntrada;
+	public void setValorTransacao(double valorTransacao) {
+		this.valorTransacao = valorTransacao;
 	}
 
 	public String getDescricao() {
@@ -84,7 +84,7 @@ public class Entrada  implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Entrada other = (Entrada) obj;
+		Transacoes other = (Transacoes) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
