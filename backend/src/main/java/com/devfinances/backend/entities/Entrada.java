@@ -3,6 +3,7 @@ package com.devfinances.backend.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class Entrada  implements Serializable{
 	private double valorEntrada;
 	private String descricao;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "financa_id")
 	private Financa financa;
 	

@@ -19,10 +19,10 @@ public class Financa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany(mappedBy = "financa",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "financa", cascade = CascadeType.ALL)
 	private List<Entrada> entradas = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "financa",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "financa", cascade = CascadeType.ALL)
 	private List<Saida> saidas = new ArrayList<>();
 	
 	private double total;
