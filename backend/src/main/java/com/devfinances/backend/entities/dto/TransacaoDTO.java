@@ -1,11 +1,14 @@
 package com.devfinances.backend.entities.dto;
 
+import java.time.LocalDate;
+
 import com.devfinances.backend.entities.Transacoes;
 
 public class TransacaoDTO {
 	private Long id;
 	private double valorTransacao;
 	private String descricao;
+	private LocalDate data;
 	
 	public TransacaoDTO() {
 		
@@ -15,12 +18,14 @@ public class TransacaoDTO {
 		this.id = id;
 		this.valorTransacao = valorTransacao;
 		this.descricao = descricao;
+		this.data = LocalDate.now();
 	}
 	
 	public TransacaoDTO(Transacoes entity) {
 		id = entity.getId();
 		valorTransacao = entity.getValorTransacao();
 		descricao = entity.getDescricao();
+		data = entity.getData();
 		
 	}
 
@@ -47,10 +52,10 @@ public class TransacaoDTO {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
-	
-	
-	
+
+	public LocalDate getData() {
+		return data;
+	}
+
 	
 }

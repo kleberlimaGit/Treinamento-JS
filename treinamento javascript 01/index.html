@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>dev.finance$</title>
   </head>
 
@@ -23,7 +24,7 @@
             <span>Entradas</span>
             <img src="./assets/income.svg" alt="imagem de entradas" />
           </h3>
-          <p>R$ 5.000,00</p>
+          <p id="enter">R$ 5.000,00</p>
         </div>
 
         <div class="balance__card">
@@ -31,7 +32,7 @@
             <span>Saídas</span>
             <img src="./assets/expense.svg" alt="imagem de saídas" />
           </h3>
-          <p>R$ 2.000,00</p>
+          <p id="left">R$ 2.000,00</p>
         </div>
 
         <div class="balance__card total">
@@ -39,7 +40,7 @@
             <span>Total</span>
             <img src="./assets/total.svg" alt="imagem de total" />
           </h3>
-          <p>R$ 3.000,00</p>
+          <p id="total">R$ 3.000,00</p>
         </div>
       </section>
       <section id="transaction">
@@ -58,39 +59,7 @@
           </thead>
 
           <tbody>
-            <tr>
-              <td class="transaction__description">Luz</td>
-              <td class="transaction__expense">- R$ 500,00</td>
-              <td class="transaction__date">21/01/2021</td>
-              <td>
-                <img
-                  src="./assets/minus.svg"
-                  alt="imagem de simbolo negativo"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td class="transaction__description">Criação website</td>
-              <td class="transaction__income">R$ 2000,00</td>
-              <td class="transaction__date">21/01/2021</td>
-              <td>
-                <img
-                  src="./assets/minus.svg"
-                  alt="imagem de simbolo negativo"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td class="transaction__description">Internet</td>
-              <td class="transaction__expense">- R$ 200,00</td>
-              <td class="transaction__date">21/01/2021</td>
-              <td>
-                <img
-                  src="./assets/minus.svg"
-                  alt="imagem de simbolo negativo"
-                />
-              </td>
-            </tr>
+
           </tbody>
         </table>
       </section>

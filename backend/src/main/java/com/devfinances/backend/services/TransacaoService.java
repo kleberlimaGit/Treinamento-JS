@@ -1,5 +1,7 @@
 package com.devfinances.backend.services;
 
+import java.time.LocalDate;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class TransacaoService {
 		transacao.setDescricao(dto.getDescricao());
 		transacao.setValorTransacao(dto.getValorTransacao());
 		transacao.setFinanca(financaRepository.findById(1L).get());
+		transacao.setData(LocalDate.now());
 		transacao = repository.save(transacao);
 		
 		return new TransacaoDTO(transacao);
