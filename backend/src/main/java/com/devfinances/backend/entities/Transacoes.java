@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 public class Transacoes implements Serializable {
@@ -23,7 +24,7 @@ public class Transacoes implements Serializable {
 	private double valorTransacao;
 	private String descricao;
 
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate data;
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -14,11 +14,11 @@ public class TransacaoDTO {
 		
 	}
 	
-	public TransacaoDTO(Long id, double valorTransacao, String descricao) {
+	public TransacaoDTO(Long id, double valorTransacao, String descricao, LocalDate data) {
 		this.id = id;
 		this.valorTransacao = valorTransacao;
 		this.descricao = descricao;
-		this.data = LocalDate.now();
+		this.data = data;
 	}
 	
 	public TransacaoDTO(Transacoes entity) {
@@ -56,6 +56,12 @@ public class TransacaoDTO {
 	public LocalDate getData() {
 		return data;
 	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+	
+	
 
 	
 }
