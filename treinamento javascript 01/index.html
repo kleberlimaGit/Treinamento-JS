@@ -46,7 +46,7 @@
       </section>
       <section id="transaction">
         <h2 class="sr-only">Transações</h2>
-        <a href="#" 
+        <a 
         onclick="Modal.open()"
         id="transaction__new-transaction">+ Nova Transação</a>
         <table id="transaction__data-table">
@@ -102,7 +102,7 @@
       <div class="modal">
         <div id="modal__form">
           <h2>Nova Transação</h2>
-          <form action="">
+          <form onsubmit="Form.submit(event)">
             <div class="modal__form__input-group">
               <label class="sr-only" for="description">Descrição</label>
               <input
@@ -110,6 +110,7 @@
                 id="description"
                 name="description"
                 placeholder="Descrição"
+                required
               />
             </div>
             <div class="modal__form__input-group">
@@ -120,6 +121,7 @@
                 id="amount"
                 name="amount"
                 placeholder="0,00"
+                required
               />
               <small class="help"
                 >Use o sinal - (negativo) para despesas e , (vírgula) para casas
@@ -132,10 +134,11 @@
                 type="date"
                 id="date"
                 name="date"
+                required
               />
             </div>
             <div class="modal__form__input-group actions">
-              <a href="#" 
+              <a 
               onclick="Modal.close()"
               class="modal__form__input-group__button cancel">Cancelar</a>
               <button>Salvar</button>

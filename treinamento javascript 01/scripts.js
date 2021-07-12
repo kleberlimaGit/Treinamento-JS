@@ -22,7 +22,7 @@ async function getFinancy() {
   }
 }
 
-function deleteTransaction(id) {
+function deleteTransaction(id,event) {
   fetch(`http://localhost:8080/transacoes/${id}`, {
     method: "DELETE",
     headers: {
@@ -30,6 +30,7 @@ function deleteTransaction(id) {
     },
     body: null,
   }).then(() => {
+    event.preventDefault()
     document.location.reload();
   });
 }
@@ -58,7 +59,7 @@ function show(transactions) {
             id="delete"
           src="./assets/minus.svg"
           alt="imagem de simbolo negativo"
-          onclick = "deleteTransaction(${transaction.id})"
+          onclick = "deleteTransaction(${transaction.id},event)"
         />
       </td>
     </tr>
@@ -92,4 +93,41 @@ function calcTransactions(transacactions) {
     style: "currency",
     currency: "BRL",
   }).format(total)}`;
+}
+
+const Form = {
+  getValues() {
+    return {
+      descricao: document.querySelector("#description").value,
+      valorTransacao: Number(document.querySelector("#amount").value),
+      data: document.querySelector("#date").value
+    }
+  },
+
+
+  submit(event) {
+    try {
+      fetch('http://localhost:8080/transacoes', {
+        method: 'POST',
+        body: JSON.stringify({
+          descricao: Form.getValues().descricao,
+          valorTransacao: Form.getValues().valorTransacao,
+          data: Form.getValues().data
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    finally{
+      document.location.reload()
+      event.preventDefault()
+      Modal.close()
+      
+    }
+  }
+
 }
