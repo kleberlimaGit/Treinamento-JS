@@ -1,5 +1,6 @@
 package com.devfinances.backend.services;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,25 +28,12 @@ public class FinancaService {
 	@Autowired
 	private TransacaoRepository transacaoRepository;
 	
-	public FinancaDTO organizarSalario(Long id, FinancaDTO financaDto) {
-		try {
-			Financa financa = repository.getOne(id);			
-			copiarTransacao(financa, financaDto);
-			financa.setTotal(calcularTotal(financa.getTransacoes()));
-			financa = repository.save(financa);
-			
-			return new FinancaDTO(financa);
-		}catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException("NAO ENCONTRADO");
-		}
-
-	}
-	
 	public FinancaDTO extratoFinanca(Long id) {
 		Optional<Financa> obj = repository.findById(id);
 		Financa financa = obj.orElseThrow(() -> new ResourceNotFoundException("NAO ENCONTRADO"));
 		financa.setTotal(calcularTotal(financa.getTransacoes()));
 		repository.save(financa);
+		financa.getTransacoes().sort(Comparator.comparing(Transacoes::getData));
 		return new FinancaDTO(financa);
 	}
 	
