@@ -22,7 +22,7 @@ async function getFinancy() {
   }
 }
 
-function deleteTransaction(id,event) {
+function deleteTransaction(id, event) {
   fetch(`http://localhost:8080/transacoes/${id}`, {
     method: "DELETE",
     headers: {
@@ -30,15 +30,17 @@ function deleteTransaction(id,event) {
     },
     body: null,
   }).then(() => {
-    event.preventDefault()
-    document.location.reload();
+    event.preventDefault();
+    getFinancy();
   });
 }
 
 getFinancy();
 // ========= POPULAR TABELA =========
 function show(transactions) {
-  let output = "";
+  let output = transactions.length ? "" : `<tr>
+  <td colspan="4">Nenhuma transação cadastrada</td>
+ </tr>`;
   let transactionFormat = "";
   for (let transaction of transactions) {
     if (transaction.valorTransacao < 0) {
@@ -46,13 +48,15 @@ function show(transactions) {
     } else {
       transactionFormat = "transaction__income";
     }
-    output += `
+
+    
+      output += `
     <tr>
       <td class="transaction__description">${transaction.descricao}</td>
       <td class=${transactionFormat}>${Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(transaction.valorTransacao)}</td>
+        style: "currency",
+        currency: "BRL",
+      }).format(transaction.valorTransacao)}</td>
       <td class="transaction__date">${moment(transaction.data).format("L")}</td>
       <td>
         <img
@@ -64,6 +68,7 @@ function show(transactions) {
       </td>
     </tr>
 `;
+    
   }
   document.querySelector("tbody").innerHTML = output;
 }
@@ -100,34 +105,29 @@ const Form = {
     return {
       descricao: document.querySelector("#description").value,
       valorTransacao: Number(document.querySelector("#amount").value),
-      data: document.querySelector("#date").value
-    }
+      data: document.querySelector("#date").value,
+    };
   },
-
 
   submit(event) {
     try {
-      fetch('http://localhost:8080/transacoes', {
-        method: 'POST',
+      fetch("http://localhost:8080/transacoes", {
+        method: "POST",
         body: JSON.stringify({
           descricao: Form.getValues().descricao,
           valorTransacao: Form.getValues().valorTransacao,
-          data: Form.getValues().data
+          data: Form.getValues().data,
         }),
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        }
-
-      })
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    } finally {
+      document.location.reload();
+      event.preventDefault();
+      Modal.close();
     }
-    finally{
-      document.location.reload()
-      event.preventDefault()
-      Modal.close()
-      
-    }
-  }
-
-}
+  },
+};
